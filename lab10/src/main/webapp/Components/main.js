@@ -30,34 +30,117 @@ $(document).on("click", "#btnSave", function(event)
 		}
 		
 		// If valid-----------------------
-		$("#formClient").submit(); 
+		var type = ($("#hidItemIDSave").val() == "") ? "POST" : "PUT"; 
+		
+		 $.ajax( 
+		 { 
+			 url : "ClientsAPI", 
+			 type : type, 
+			 data : $("#formClient").serialize(), 
+			 dataType : "text", 
+			 complete : function(response, status) 
+			 { 
+			 	onClientSaveComplete(response.responseText, status); 
+			 } 
+		 }); 
 
 });
+
+function onClientSaveComplete(response, status) 
+{ 
+	if (status == "success") 
+	 { 
+		 var resultSet = JSON.parse(response); 
+		 
+			 if (resultSet.status.trim() == "success") 
+			 { 
+				 $("#alertSuccess").text("Successfully saved."); 
+				 $("#alertSuccess").show(); 
+				 $("#divItemsGrid").html(resultSet.data); 
+				 
+			 } else if (resultSet.status.trim() == "error") 
+			 { 
+				 $("#alertError").text(resultSet.data); 
+				 $("#alertError").show(); 
+			 } 
+	 } 
+	 else if (status == "error") 
+	 { 
+		$("#alertError").text("Error while saving."); 
+		$("#alertError").show(); 
+	 } 
+	 else
+	 { 
+		$("#alertError").text("Unknown error while saving.."); 
+		$("#alertError").show(); 
+	 } 
+	 
+	 $("#hidItemIDSave").val(""); 
+	 $("#formItem")[0].reset(); 
+}
+
 
 
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event) 
 { 
- $("#hidClientIDSave").val($(this).closest("tr").find('#hidClientUpdate').val()); 
- $("#clientName").val($(this).closest("tr").find('td:eq(0)').text()); 
- $("#clientAddress").val($(this).closest("tr").find('td:eq(1)').text()); 
- $("#phoneNo").val($(this).closest("tr").find('td:eq(2)').text()); 
- $("#nic").val($(this).closest("tr").find('td:eq(3)').text());
- $("#zone").val($(this).closest("tr").find('td:eq(3)').text());  
+	 $("#hidItemIDSave").val($(this).data("connectionNo")); 
+	
+	 $("#clientName").val($(this).closest("tr").find('td:eq(0)').text()); 
+	 $("#clientAddress").val($(this).closest("tr").find('td:eq(1)').text()); 
+	 $("#phoneNo").val($(this).closest("tr").find('td:eq(2)').text()); 
+	 $("#nic").val($(this).closest("tr").find('td:eq(3)').text());
+	 $("#zone").val($(this).closest("tr").find('td:eq(3)').text());  
 }); 
-clientName
-clientAddress
-phoneNo
-nic
-zone
 
 // REMOVE==========================================
-$(document).on("click", ".remove", function(event)
-{
-	$(this).closest(".student").remove();
-	$("#alertSuccess").text("Removed successfully.");
-	$("#alertSuccess").show();
+
+
+$(document).on("click", ".btnRemove", function(event) 
+{ 
+	 $.ajax( 
+	 { 
+		 url : "ClientsAPI", 
+		 type : "DELETE", 
+		 data : "connectionNo=" + $(this).data("connectionNo"),
+		 dataType : "text", 
+		 complete : function(response, status) 
+		 { 
+		 	onItemDeleteComplete(response.responseText, status); 
+		 } 
+	 }); 
 });
+
+
+function onItemDeleteComplete(response, status) 
+{ 
+	if (status == "success") 
+	 { 
+	 var resultSet = JSON.parse(response); 
+		 if (resultSet.status.trim() == "success") 
+		 { 
+			 $("#alertSuccess").text("Successfully deleted."); 
+			 $("#alertSuccess").show(); 
+			 $("#divItemsGrid").html(resultSet.data); 
+		 }
+		 else if (resultSet.status.trim() == "error") 
+		 { 
+			 $("#alertError").text(resultSet.data); 
+			 $("#alertError").show(); 
+		 } 
+	 } 
+	 else if (status == "error") 
+	 { 
+		 $("#alertError").text("Error while deleting."); 
+		 $("#alertError").show(); 
+	 } 
+	 else
+	 { 
+		 $("#alertError").text("Unknown error while deleting.."); 
+		 $("#alertError").show(); 
+ 	 } 
+}
+
 
 
 
