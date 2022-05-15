@@ -1,3 +1,4 @@
+<%@page import="com.UserModel"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -14,20 +15,12 @@
 <body>
 
 	<div class="container">
-		<div class="row">
+		<div class="row"> 
 			<div class="col-8">
+			
 				<h1 class="m-3">Client Management</h1>
 				<form id="formClient">
 				
-				
-					<!-- connectionNo
-					<div class="input-group input-group-sm mb-3">
-						<div class="input-group-prepend">
-						<span class="input-group-text" id="connectionNo">Connection No :</span>
-						</div>
-						<input type="text" id="txtName" name="txtName">
-					</div> -->
-					
 					<!-- clientName -->
 					<div class="input-group input-group-sm mb-3">
 						<div class="input-group-prepend">
@@ -70,36 +63,35 @@
 					</div>
 					
 					
-	
 					
-					<!-- alert sections -->
+	
+					<div>
+						<input type="button" id="btnSave" value="Save" class="btn btn-primary">
+						
+						<input type="hidden" id="hidClientIDSave" name="hidClientIDSave" value="">
+					</div>
+					
+					
+					
+				</form>
+				
+				
+				<!-- alert sections -->
 					<div id="alertSuccess" class="alert alert-success"></div>
 					<div id="alertError" class="alert alert-danger"></div>
 					
-
-					<input type="button" id="btnSave" value="Save" class="btn btn-primary">
-					
-					<input type="hidden" id="hidClientIDSave" name="hidClientIDSave" value="">
-				
-				</form>
 			</div>
 		</div>
 		<br>
-		<div class="row">
-			<div class="col-12" id="colStudents">
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			
-			</div>
-		</div>
+
+					<div id="divClientsGrid">
+						 <%
+						 UserModel userObj = new UserModel(); 
+						 out.print(userObj.readClients()); 
+						 %>
+					</div>
+					
+	
 	</div>
 	
 

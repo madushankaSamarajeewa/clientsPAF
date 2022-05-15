@@ -1,4 +1,6 @@
-$(document).ready(function() 
+/**
+ * 
+ */$(document).ready(function() 
 { 
 if ($("#alertSuccess").text().trim() == "") 
  { 
@@ -30,7 +32,7 @@ $(document).on("click", "#btnSave", function(event)
 		}
 		
 		// If valid-----------------------
-		var type = ($("#hidItemIDSave").val() == "") ? "POST" : "PUT"; 
+		var type = ($("#hidClientIDSave").val() == "") ? "POST" : "PUT"; 
 		
 		 $.ajax( 
 		 { 
@@ -56,7 +58,7 @@ function onClientSaveComplete(response, status)
 			 { 
 				 $("#alertSuccess").text("Successfully saved."); 
 				 $("#alertSuccess").show(); 
-				 $("#divItemsGrid").html(resultSet.data); 
+				 $("#divClientsGrid").html(resultSet.data); 
 				 
 			 } else if (resultSet.status.trim() == "error") 
 			 { 
@@ -75,8 +77,8 @@ function onClientSaveComplete(response, status)
 		$("#alertError").show(); 
 	 } 
 	 
-	 $("#hidItemIDSave").val(""); 
-	 $("#formItem")[0].reset(); 
+	 $("#hidClientIDSave").val(""); 
+	 $("#formClient")[0].reset(); 
 }
 
 
@@ -84,7 +86,7 @@ function onClientSaveComplete(response, status)
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event) 
 { 
-	 $("#hidItemIDSave").val($(this).data("connectionNo")); 
+	 $("#hidClientIDSave").val($(this).data("connectionNo")); 
 	
 	 $("#clientName").val($(this).closest("tr").find('td:eq(0)').text()); 
 	 $("#clientAddress").val($(this).closest("tr").find('td:eq(1)').text()); 
@@ -121,7 +123,7 @@ function onItemDeleteComplete(response, status)
 		 { 
 			 $("#alertSuccess").text("Successfully deleted."); 
 			 $("#alertSuccess").show(); 
-			 $("#divItemsGrid").html(resultSet.data); 
+			 $("#divClientsGrid").html(resultSet.data); 
 		 }
 		 else if (resultSet.status.trim() == "error") 
 		 { 
