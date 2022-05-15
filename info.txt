@@ -1,0 +1,12 @@
+IT15159786
+M V K M Samarajeewa
+
+
+view is implemented on index.jsp
+server model - UserModel.java
+API -ClientsAPI.java
+JQuery -main.js
+
+screenshot of the file structure is uploaded to the repo.
+git bash error occured when uploading the bootstrap and JQuery files(screenshot uploaded) so zipped file also inclued in the git branch.
+

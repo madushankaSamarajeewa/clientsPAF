@@ -50,12 +50,19 @@ public class UserModel {
 					 
 					 preparedStmt.execute(); 
 					 con.close(); 
-					 output = "Inserted successfully"; 
+					// output = "Inserted successfully"; 
+					 
+					 String newItems = readClients(); 
+					 output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}"; 
+
 				 } 
 				 catch (Exception e) 
 				 { 
-					 output = "Error while inserting the item."; 
-					 System.err.println(e.getMessage()); 
+					// output = "Error while inserting the item."; 
+					 output = "{\"status\":\"error\", \"data\":\"Error while inserting the item.\"}"; 
+					 
+							 System.err.println(e.getMessage()); 
+					 
 				 } 
 				 return output; 
 		} 
@@ -94,18 +101,17 @@ public class UserModel {
 								 String zone = rs.getString("zone"); 
 								 
 								 // Add into the html table
-								 output += "<tr><td><input id='hidClientUpdate' name='hidClientUpdate' type='hidden' value='"+connectionNo+"'>" + clientName + "</td>";
+								 output += "<tr><td>" + clientName + "</td>";
 							//	 output += "<td>" + clientName + "</td>"; 
 								 output += "<td>" + clientAddress + "</td>"; 
 								 output += "<td>" + phoneNo + "</td>";
 								 output += "<td>" + nic + "</td>";
 								 output += "<td>" + zone + "</td>";
 								 // buttons
-								 output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary'></td>"
-								 + "<td><form method='post' action='index.jsp'>"
-								 + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
-								 + "<input name='hidConnectionNoDelete' type='hidden' value='" + connectionNo 
-								 + "'>" + "</form></td></tr>"; 
+								 output += "<td><input name='btnUpdate' type='button' value='Update' class='btnUpdate btn btn-secondary' data-connectionId='"+ connectionNo +"'></td>"
+								 + "<td><input name='btnRemove' type='submit' value='Remove' class='btnRemove btn btn-danger' data-connectionId='"+ connectionNo +"'></td></tr>";
+								
+								 
 						 } 
 						 con.close(); 
 						 // Complete the html table
@@ -146,12 +152,19 @@ public class UserModel {
 				 // execute the statement
 				 preparedStmt.execute(); 
 				 con.close(); 
-				 output = "Updated successfully"; 
+				// output = "Updated successfully"; 
+				 
+				 String newItems = readClients(); 
+				 output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}"; 
 			 } 
 			 catch (Exception e) 
 			 { 
-				 output = "Error while updating the item."; 
-				 System.err.println(e.getMessage()); 
+				// output = "Error while updating the item."; 
+				// System.err.println(e.getMessage()); 
+				 
+				 
+				 output = "{\"status\":\"error\", \"data\":\"Error while updating the item.\"}"; 
+						 System.err.println(e.getMessage()); 
 			 } 
 			 return output; 
 		}
@@ -178,12 +191,19 @@ public class UserModel {
 				 preparedStmt.execute(); 
 				 con.close(); 
 				 
-				 output = "Deleted successfully"; 
+				 //output = "Deleted successfully"; 
+				 
+				 String newItems = readClients(); 
+				 output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}"; 
+
 			 } 
 			 catch (Exception e) 
 			 { 
-				 output = "Error while deleting the item."; 
-				 System.err.println(e.getMessage()); 
+				 //output = "Error while deleting the item."; 
+				// System.err.println(e.getMessage()); 
+				 
+				 output = "{\"status\":\"error\", \"data\":\"Error while deleting the item.\"}"; 
+						 System.err.println(e.getMessage()); 
 			 } 
 			 return output; 
 		} 
